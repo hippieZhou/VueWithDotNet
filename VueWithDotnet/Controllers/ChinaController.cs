@@ -12,9 +12,9 @@ namespace VueWithDotnet.Controllers
     public class ChinaController: ControllerBase
     {
         private readonly IOptions<China> _options;
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<ChinaController> _logger;
 
-        public ChinaController(IOptions<China> options, ILogger<WeatherForecastController> logger)
+        public ChinaController(IOptions<China> options, ILogger<ChinaController> logger)
         {
             _options = options;
             _logger = logger;
