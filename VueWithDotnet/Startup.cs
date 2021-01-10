@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
@@ -45,13 +43,16 @@ namespace VueWithDotnet
                        .AllowAnyHeader());
             });
 
-            var file = Path.Combine(Env.ContentRootPath, "ssq.json");
-            if (File.Exists(file))
+            services.Configure<China>(options =>
             {
-                var json = File.ReadAllText(file);
-                var data = JsonSerializer.Deserialize<Province[]>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                services.Configure<China>(options => { options.Provinces = data; });
-            }
+                var file = Path.Combine(Env.ContentRootPath, "ssq.json");
+                if (File.Exists(file))
+                {
+                    var json = File.ReadAllText(file);
+                    var data = JsonSerializer.Deserialize<Province[]>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                    options.Provinces = data;
+                }
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
