@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using VueCliMiddleware;
+using VueWithDotnet.Middlewares;
 using VueWithDotnet.Models;
 
 namespace VueWithDotnet
@@ -26,7 +27,7 @@ namespace VueWithDotnet
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "VueWithDotnet", Version = "v1" });
@@ -75,6 +76,7 @@ namespace VueWithDotnet
                 endpoints.MapControllers();
             });
 
+            app.UseErrorHandlerMiddleware();
 
             app.UseSpa(spa =>
             {
