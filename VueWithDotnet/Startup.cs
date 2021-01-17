@@ -7,31 +7,36 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using VueCliMiddleware;
-using VueWithDotnet.Middlewares;
-using VueWithDotnet.Models;
+using VueWithDotNet.Middlewares;
+using VueWithDotNet.Models;
+using VueWithDotNet.Repositories;
+using Microsoft.EntityFrameworkCore.InMemory.Infrastructure;
+using Microsoft.EntityFrameworkCore;
+using VueWithDotNet.Infrastructure.DbContexts;
+using VueWithDotNet.Extensions;
+using VueWithDotNet.Application.Interfaces;
+using VueWithDotNet.Services;
+using System;
+using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace VueWithDotnet
+namespace VueWithDotNet
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+        private IWebHostEnvironment Env { get; }
+
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Configuration = configuration;
             Env = env;
         }
 
-        public IConfiguration Configuration { get; }
-
-        private IWebHostEnvironment Env { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.IgnoreNullValues = true);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "VueWithDotnet", Version = "v1" });
-            });
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp";
@@ -43,20 +48,13 @@ namespace VueWithDotnet
                        .AllowAnyMethod()
                        .AllowAnyHeader());
             });
-
-            services.Configure<China>(options =>
-            {
-                var file = Path.Combine(Env.ContentRootPath, "ssq.json");
-                if (File.Exists(file))
-                {
-                    var json = File.ReadAllText(file);
-                    var data = JsonSerializer.Deserialize<Province[]>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-                    options.Provinces = data;
-                }
-            });
+            services.AddFakeData(Env);
+            services.AddApplication(Configuration);
+            services.AddSwaggerExtension();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IAuthenticatedUserService, AuthenticatedUserService>();
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -68,9 +66,12 @@ namespace VueWithDotnet
 
             app.UseRouting();
             app.UseSpaStaticFiles();
+
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseCors("CorsPolicy");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

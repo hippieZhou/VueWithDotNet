@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace VueWithDotnet.Helpers
+namespace VueWithDotNet.Helpers
 {
     public class AppException : Exception
     {

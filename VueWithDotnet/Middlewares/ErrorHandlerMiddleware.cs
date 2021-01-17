@@ -7,9 +7,9 @@ using System.Linq;
 using System.Net;
 using System.Text.Json;
 using System.Threading.Tasks;
-using VueWithDotnet.Helpers;
+using VueWithDotNet.Helpers;
 
-namespace VueWithDotnet.Middlewares
+namespace VueWithDotNet.Middlewares
 {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class ErrorHandlerMiddleware

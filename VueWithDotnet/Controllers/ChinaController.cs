@@ -3,9 +3,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using VueWithDotnet.Models;
+using VueWithDotNet.Models;
 
-namespace VueWithDotnet.Controllers
+namespace VueWithDotNet.Controllers
 {
     [ApiController]
     [Route("[controller]")]

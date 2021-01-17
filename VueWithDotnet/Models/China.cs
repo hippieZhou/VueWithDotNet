@@ -1,4 +1,4 @@
-﻿namespace VueWithDotnet.Models
+﻿namespace VueWithDotNet.Models
 {
     public class China
     {
