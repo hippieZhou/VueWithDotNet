@@ -1,23 +1,13 @@
-using System.IO;
-using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
 using VueCliMiddleware;
 using VueWithDotNet.Middlewares;
-using VueWithDotNet.Models;
-using VueWithDotNet.Repositories;
-using Microsoft.EntityFrameworkCore.InMemory.Infrastructure;
-using Microsoft.EntityFrameworkCore;
-using VueWithDotNet.Infrastructure.DbContexts;
 using VueWithDotNet.Extensions;
 using VueWithDotNet.Application.Interfaces;
 using VueWithDotNet.Services;
-using System;
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
