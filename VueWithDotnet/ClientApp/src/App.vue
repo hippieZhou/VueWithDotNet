@@ -4,14 +4,14 @@
 </template>
 
 <script>
-import NavMenu from './components/NavMenu.vue'
+import NavMenu from "./components/NavMenu.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    NavMenu
-  }
-}
+    NavMenu,
+  },
+};
 </script>
 
 <style>

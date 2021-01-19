@@ -20,6 +20,9 @@
                         <li class="nav-item">
                             <router-link :to="{ name: 'Step01' }" class="nav-link text-dark">Step01</router-link>
                         </li>
+                        <li class="nav-item">
+                            <router-link :to="{ name: 'Step02' }" class="nav-link text-dark">Step02</router-link>
+                        </li>
                     </ul>
                 </div>
             </div>
