@@ -2,18 +2,14 @@
   <div>
     <div style="margin-bottom: 20px">
       <el-button size="small" @click="goBack">{{ id }},返回</el-button>
+      <el-button size="small" @click="toggle">切换</el-button>
     </div>
-    <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane label="个人信息" name="first">个人信息</el-tab-pane>
-      <el-tab-pane label="职业信息" name="second">职业信息</el-tab-pane>
-    </el-tabs>
     <component :is="childComponent"></component>
   </div>
 </template>
 <script>
-import user from "./components/Step02User.vue";
-import Job from "./components/Step02Job.vue";
-
+import User from "./Step02User";
+import Job from "./Step02Job";
 export default {
   name: "detail",
   components: {
@@ -24,7 +20,7 @@ export default {
     return {
       activeName: "first",
       id: -1,
-      childComponent: null,
+      childComponent: 'User',
     };
   },
   methods: {
@@ -34,6 +30,9 @@ export default {
     goBack() {
       window.history.length > 1 ? this.$router.go(-1) : this.$router.push("/");
     },
+    toggle(){
+      this.childComponent = this.childComponent === 'User'?'Job':'User';
+    }
   },
   mounted() {
     let self = this;
